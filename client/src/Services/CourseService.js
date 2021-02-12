@@ -1,28 +1,33 @@
-// The following variables will be used to populate the baseURL variable - these assume that course nor twon are passed in...
-let ques = "";
-let course = "";
-let connection = "";
-let town = "";
+export const getCourses = (inCustomer, inRating) => {
 
-const baseURL = `http://localhost:8080/courses/${ques}${course}${connection}${town}/`;
-
-
-export const getCourse = (inCourse, inTown) => {
-
-    if (inCourse.length > 0 && inTown.length > 0) {
-        // Course and Town passed in...
-        ques = "?";
-        course = inCourse;
-        connection = "&";
-        town = inTown;
-
-    } else if (inCourse.length) {
+    let ques = "";
+    let filter = "";
         
-        // Only course passed in
+    if (inCustomer.length > 0) {
+        // Use customer as the parameter
         ques = "?";
-        course = inCourse;
+        filter = "customer=" + inCustomer;
+    } else if (inRating.length > 0) {
+        // Use customer as the parameter
+        ques = "?";
+        filter = "rating=" + inRating;
     }
+
+    const baseURL = `http://localhost:8080/courses/${ques}${filter}`;
+
+    console.log(baseURL);
 
     return fetch(baseURL)
     .then(res => res.json())
-}
+
+ }
+
+
+//  return fetch(baseURL, {
+//     headers : { 
+//       'Content-Type': 'application/json',
+//       'Accept': 'application/json'
+//      }
+
+//   })
+// .then(res => res.json())
